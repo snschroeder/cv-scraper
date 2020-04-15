@@ -14,14 +14,14 @@ pprint(serverStat)
 cdcChartUrl = 'https://www.cdc.gov/TemplatePackage/contrib/widgets/cdcCharts/iframe.html?chost=www.cdc.gov&cpath=/coronavirus/2019-ncov/cases-updates/cases-in-us.html&csearch=&chash=&ctitle=Cases%20in%20U.S.%20%7C%20CDC&wn=cdcCharts&wf=/TemplatePackage/contrib/widgets/cdcCharts/&wid=cdcCharts2&mMode=widget&mPage=&mChannel=&host=www.cdc.gov&displayMode=wcms&configUrl=/coronavirus/2019-ncov/cases-updates/total-cases-onset.json&class=mb-3'
 finder = '#cdc-chart-1-data'
 
-def fetchData(url, finder):
+def scrape_data(url, finder):
     session = requests_html.HTMLSession()
     r = session.get(url)
     r.html.render()
     chart = r.html.find(finder, first=True)
     return chart.text
 
-dataset = fetchData(cdcChartUrl, finder)
+dataset = scrape_data(cdcChartUrl, finder)
 
 def processData(data):
     arr = data.split('\n')
@@ -41,7 +41,7 @@ def initializeDB(url):
     client = MongoClient(url)
     db = client.covid
 
-    dirtyData = fetchData(cdcChartUrl, finder)
+    dirtyData = scrape_data(cdcChartUrl, finder)
     day, infected = processData(dirtyData)
 
     for ind, val in enumerate(day):
@@ -52,5 +52,10 @@ def initializeDB(url):
         pprint(dailyData)
         result = db.daily.insert_one(dailyData)
         print('Created as {0}'.format(result.inserted_id))
+
+
+def fetch_latest(url):
+    client = MongoClient(url)
+    
 
 initializeDB(mongoInfo.connectionUrl)
