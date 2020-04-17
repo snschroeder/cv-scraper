@@ -1,4 +1,5 @@
-from flask import Flask, jsonify
+from flask import Flask
+from json_encoder import JSONEncoder
 from pprint import pprint
 import mongo_info
 import pymongo
@@ -22,6 +23,15 @@ def get_infected_info():
 	for val in dataset:
 		output.append(val)
 
-	pprint(output)
-	
+
+	json_out = JSONEncoder().encode(output)
+
+	pprint(json_out)
+
+	return json_out
+
+	# JSON_OUT = JSON.DUMPS(OUTPUT)
+	#
+	# PPRINT(JSON_OUT)
+
 	# return jsonify(output)

@@ -1,1 +1,8 @@
-/mongo_info.py
+coronapi/mongo_info.py
+
+instance/
+
+.coverage
+
+build/
+*.egg-info/

@@ -13,6 +13,7 @@ requests-html = "*"
 pymongo = {extras = ["srv"],version = "*"}
 dnspython = "*"
 flask = "*"
+simplejson = "*"
 
 [requires]
 python_version = "3.8"
