@@ -11,7 +11,6 @@ app = Flask(__name__)
 def hello():
 	return 'Hello!'
 
-# currently broken, please fix me so I return a useable response
 @app.route('/infected_data', methods=['GET'])
 def get_infected_info():
 	client = pymongo.MongoClient(mongo_info.connection_url)
