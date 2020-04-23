@@ -26,7 +26,6 @@ def update_db(db_url, cdc_url):
 
     client = MongoClient(db_url)
     db = client.covid
-
     latest = db.daily.find_one({}, sort=[('_id', -1)])
 
     db_day = latest['day']
